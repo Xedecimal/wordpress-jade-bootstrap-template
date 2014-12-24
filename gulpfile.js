@@ -9,14 +9,14 @@
 var gulp 				= require("gulp"),
 	gutil 				= require("gulp-util"),
 	watch 				= require("gulp-watch"),
-	compass 			= require("gulp-compass"),
+	less				= require('gulp-less'),
 	jade 				= require("gulp-jade-php"),
 	plumber				= require("gulp-plumber"),
 	livereload			= require("gulp-livereload")
 
 var paths = {
 	styles: {
-		src: "./scss/**/*.scss",
+		src: "./less/*.less",
 		dest: "stylesheets"
 	},
 	templates: {
@@ -33,14 +33,7 @@ function handleError(err) {
 gulp.task("styles", function() {
 	return gulp.src(paths.styles.src)
 		.pipe(plumber())
-		.pipe(compass({
-			config_file: "./config.rb",
-			css: "stylesheets",
-			sass: "scss",
-			image: "./images",
-			import_path: "./bower_components"
-		}))
-		.on("error", handleError)
+		.pipe(less())
 		.pipe(plumber.stop())
 		.pipe(gulp.dest(paths.styles.dest));
 });
